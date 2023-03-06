@@ -1,5 +1,5 @@
 # DelphiIMAPI2Burning
-Hi there! I'm excited to introduce you to my open-source library for burning CDs, DVDs, and Blu-ray discs using Delphi. I developed this library back in 2015 for an internal project and noticed that there weren't many similar libraries available online. So, I've decided to share it on GitHub to help other Delphi developers with their burning needs.
+my open-source library for burning CDs, DVDs, and Blu-ray discs using Delphi. I developed this library back in 2015 for an internal project and noticed that there weren't many similar libraries available online. So, I've decided to share it on GitHub to help other Delphi developers with their burning needs.
 
 My library, called IMAPI2 Windows Burning, supports a range of disc types, including CD, DVD, BDR, CD-RW, DVD-RW, and ISO creation. I admit that some parts of the library may need to be refactored to make them more user-friendly, and I need to eliminate some of the Italian comments. Moreover, I've learned some best practices for coding since I developed the library, so I plan to update the code accordingly.
 
