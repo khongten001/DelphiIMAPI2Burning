@@ -1179,7 +1179,7 @@ begin
   CreateInterListDriveByType;
   BuildListDrivesOfType;
   CreateImageListIconSystem;
-  {Indica se sul sistama ci sono Masterizzatori}
+  {Indicates if there are any Writers on the system}
   if Not FDiscMaster.IsSupportedEnvironment then
   begin
     {$REGION 'Log'}
@@ -1200,7 +1200,7 @@ var LIdxDriver    : Integer;
     LWBDR         : Boolean;
     LwCD_DL       : Boolean;
 begin
-  {Controllo tutti i masterizzatori per sapere quali supporti sono abilitato a masterizzare}
+  {I check all the burners to know which media I am allowed to burn}
   For LIdxDriver := 0 to FDiscMaster.Count - 1 do
   begin
     if not CheckAssignedAndActivationDrive(LIdxDriver) then Continue;
@@ -1235,11 +1235,11 @@ begin
         LWBDR    := False;
         LWDvd_DL := False;
         LwCD_DL  := False;
-        {Verifico se il disco � recordable}
+        {Check if the disc is recordable}
         isRecordableDriver(FDiscRecord.SupportedFeaturePages,LWCd,LWDvd,LWBDR,LWDvd_DL,LwCD_DL);
-        {Verifico se il disco � un masterizzatore rescrivibile}
+        {Check if the disc is a rewritable recorder}
         IsWrittableDriver(FDiscRecord.SupportedProfiles,LWCd,LWDvd,LWBDR,LWDvd_DL,LwCD_DL);
-        {Aggiungo il disco alla corretta lista interna di driver}
+        {I add the disk to the correct internal list of drivers}
         BuildListDriverType(FDiscRecord.VolumeName,LWCd,LWDvd,LWBDR,LWDvd_DL,LwCD_DL,LIdxDriver);
       Finally
         FDiscRecord.Disconnect;
@@ -1408,7 +1408,7 @@ begin
   End;
 end;
 
-{Chiude il cassetto del drive }
+{Closes the drive tray }
 Function TBurningTool.CloseTray(aIdexDriver: Integer):Boolean;
 begin
   Result := False;
@@ -1447,7 +1447,7 @@ begin
   Result := True;
 end;
 
-{ Apre il cassetto del drive }
+{ Open the drive tray }
 Function TBurningTool.DriveEject(aIdexDriver: Integer):Boolean;
 begin
   Result := False;
@@ -1529,7 +1529,7 @@ begin
   End;
 End;
 
-{Elimina il contenuto del disco riscrivibile}
+{Erases a disk using the specified optical drive and support type}
 Function TBurningTool.EraseDisk(aIdexDriver,aSupportType:Integer;aEject:Boolean):Boolean;
 Var LDiskFormat : TMsftDiscFormat2Erase;
     LErrorMedia : Boolean;
@@ -1561,16 +1561,16 @@ begin
     end;
 
     Try
-      {Verifico se nell'unit� � presente almeno un disco altrimenti lo richiedo}
+      {check if there is a disc in the driveo}
       if DiskIsPresentOnDrive(aIdexDriver,LDataWriter) then
       begin
-        {Verifico se nell'unita c'� un disco idoneo al supporto}
+        {check if there is a compatible disc in the drive}
         if CheckMediaBySupport(aIdexDriver,aSupportType,LisSupportRW,LDataWriter) then
         begin
-          {Verifico se nell'unitca c'� un disco vuoto}
+          {check if there is a empty disc in the drive}
           if Not isDiskEmpty(LDataWriter,aIdexDriver,LErrorMedia) then
           begin
-            {verifico se nell'unit� c'� un dico rescrivibile}
+            {check if there is a rewritable disc in the drive}
             if LisSupportRW then
             begin
               if Not isDiskWritable(LDataWriter,aIdexDriver,LErrorMedia) then
@@ -1595,7 +1595,7 @@ begin
           end
           else
           begin
-            {il disco � vuoto non ha senzo fare una formattazione}
+            {the disk is empty there is no point in formatting it}
             Result := True;
             Exit;
           end;
@@ -2177,7 +2177,7 @@ begin
   if Not Result then
   begin
     LsFlag := 0;
-    {Non stampo i log pero effettuo una verifica con operatori BTIWASE}
+    {I don't print the logs but I check with BTIWASE operators}
     for I := 0 to Length(aCheckStatus) do
     begin
       if I = 0 then
@@ -2213,7 +2213,7 @@ begin
     if Not result then
       aErrorMedia := LMediaStatus <> IMAPI_FORMAT2_DATA_MEDIA_STATE_UNKNOWN;
 
-    {Faccio al massimo 3 tentatvi poi do errore}
+    {I make a maximum of 3 attempts then an error}
     if not aErrorMedia then
     begin
       {$REGION 'Log'}
@@ -2276,7 +2276,7 @@ begin
   if Not CheckMedia(aDataWriter,aIdexDriver,LChecStatus,aErrorMedia,LMediaStatus) then
   begin
     if FAbort then Exit;
-    {Faccio al massimo 3 tentatvi poi do errore}
+    {I make a maximum of 3 attempts then an error}
     if LMediaStatus = IMAPI_FORMAT2_DATA_MEDIA_STATE_UNKNOWN then
     begin
       {$REGION 'Log'}
@@ -2341,7 +2341,7 @@ var LLetterDrive  : String;
     function SetCheckDisk:Boolean;
     begin
       Result := True;
-      {Imposto la verifica del disco}
+      {Set up disk verification}
       if aCheckDisk then
       begin
         if Not SetBurnVerification(LDataWriter,IMAPI_BURN_VERIFICATION_FULL) then
@@ -2402,10 +2402,10 @@ begin
       LDataWriter.Recorder    := FDiscRecord.DefaultInterface;
       LDataWriter.OnUpdate    := MsftDiscFormat2DataUpdate;
 
-      {Prendo il controllo esclusivo del driver}
+      {Taking exclusive control of the drive}
       DoOnProgressBurnCustom(Acq_driver);
 
-      {Chiudo il cassetto eventualmente aperto}
+      {close any open tray}
       If not CloseTray(aIdexDriver) then exit;
       Sleep(5000);
 
@@ -2421,11 +2421,11 @@ begin
       {TSI:IGNORE OFF}
       {$ENDREGION}
 
-      {Imposto eventuale verifica del disco}
+      {set any verification of the disk}
       if Not SetCheckDisk then Exit;
 
       LMax_Retry := DEFAULT_MAX_RETRY;
-      {Verifica disco inserito con eventuale ERASE se abilitato}
+      {Verify disc inserted with possible ERASE if enabled}
       repeat
          if Not CheckABort(Result) then Exit;
          Inc(LiRetry);
@@ -2483,7 +2483,7 @@ begin
     Try
       SafeArrayGetLBound(LSupportWriteSpeedDescriptors, 1, LLBound);
       SafeArrayGetUBound(LSupportWriteSpeedDescriptors, 1, LHBound);
-      {Rescrivibili}
+      {Rewritable}
       for I := LHBound downto LLBound do
       begin
         SafeArrayGetElement(LSupportWriteSpeedDescriptors, I, LvTmp);
@@ -2724,7 +2724,7 @@ begin
   LDiskPresent := False;
   LsMsg        := Format(Insert_disk,[aLetterDrive]);
 
-  {Verifico se nell'unit� � presente almeno un disco altrimenti lo richiedo}
+  {I check if there is at least one disk in the unit otherwise I ask for it}
   if DiskIsPresentOnDrive(aIdexDriver,aDataWriter) then
   begin
     LDiskPresent := True;
@@ -2736,7 +2736,7 @@ begin
 
     DoOnProgressBurnCustom(Disk_detected);
 
-    {Verifico se nell'unita c'� un disco idoneo al supporto}
+    {Check if there is a disc suitable for the media in the drive}
     if CheckMediaBySupport(aIdexDriver,aSupportType,LisSupportRW,aDataWriter) then
     begin
       {$REGION 'Log'}
@@ -2747,7 +2747,7 @@ begin
       DoOnProgressBurnCustom(Invalid_Disk);
 
 
-      {Verifico se nell'unitca c'� un disco vuoto}
+      {Check if there is a empty disc in the drive}
       
       LisEmpy := isDiskEmpty(aDataWriter,aIdexDriver,LErrorMedia);
 
@@ -2763,7 +2763,7 @@ begin
            WriteLog('TBurningTool.MngInsertDisk',Format('disk on drive letter [ %s ] is not empty ',[aLetterDrive]),tpLivInfo);
         {TSI:IGNORE OFF}
         {$ENDREGION}
-        {verifico se nell'unit� c'� un dico rescrivibile}
+        {check if there is a rewritable disc in the drive}
         if LisSupportRW then
           LisDiskRW := isDiskWritable(aDataWriter,aIdexDriver,LErrorMedia);
       end
@@ -2793,10 +2793,10 @@ begin
   if FAbort then Exit;
   if Not LDiskPresent and ( aIRetry < DEFAULT_MAX_RETRY )  then Exit;
 
-  {Sono sicuro che ci sia un disco nell'unit� ora verifico se � vuoto}
+  {I'm sure there is a disk in the drive and now check if it is empty}
   if ( Not LisEmpy ) then
   begin
-    {Disco riscrivibile AUTO ERASE o ERASE su richiesta configurabile da Regedit quindi per singolo OW }
+    {Rewritable disc AUTO ERASE or ERASE on demand configurable }
     if ( not CanErase and not EraseCDAuto ) or
        ( not IsDriverRW(aIdexDriver,aSupportType) or ( not LisDiskRW ) )
     then
@@ -2816,7 +2816,7 @@ begin
     begin
       if CanErase and not EraseCDAuto then
       begin
-        {Cancellazione del disco con richiesta utente}
+        {Disk erasing with user requeste}
         if MessageBox(0, Pchar(Format(Erase_request,[aLetterDrive])),
                          PChar(Application.Title),
                          MB_ICONINFORMATION or MB_OK or MB_OKCANCEL or MB_TOPMOST ) in [idOk]
@@ -2826,7 +2826,7 @@ begin
           FAbort := True;
       end
       else
-        {AUTO Erase del disco in automatico senza richiesta}
+        {AUTO Automatic disk erase without prompt}
         Result := EraseDisk(aIdexDriver,aSupportType,False);
     end;
   end
@@ -2845,7 +2845,7 @@ begin
       else
       begin
         DriveEject(aIdexDriver);
-        {Dischi riscrivibili non ammessi}
+        {Rewritable discs not allowed}
         if MessageBox(0, Pchar(Format(Burn_Not_possible_rw,[aLetterDrive])),
                          PChar(Application.Title),
                        MB_ICONINFORMATION or MB_OK or MB_OKCANCEL or MB_TOPMOST ) in [idOk]
