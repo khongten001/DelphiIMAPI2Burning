@@ -36,7 +36,6 @@ type
   private
     { Private declarations }
     FBurningTool : TBurningTool;
-    FAbort       : Boolean;
     FRunning     : Boolean;
     procedure DoOnProgress(Sender:Tobject;Const SInfo:String;SPosition :Int64;RefreshPosition,aAbort:Boolean;iType:integer;AllowAbort:Boolean);
     procedure DoOnLog(Const aFunctionName,aDescriptionName:String;Level:TpLivLog;IsDebug:Boolean=False);
@@ -68,6 +67,7 @@ begin
         Exit;
       end;
       LInfoBurn.Caption := 'Start burning...';
+      
       {Evento di progress della masterizzazione}
       FBurningTool.BurningDiskImage(CbDriver.ItemIndex,CBDriver.Properties.Items[CbDriver.ItemIndex].Tag,OpenDialog1.FileName,'DiscTest',CkCheckFinalFile.State=tssON)
     end
@@ -84,6 +84,7 @@ begin
   FBurningTool.OnProgressBurn := DoOnProgress;
   FBurningTool.OnLog          := DoOnLog;
   FBurningTool.BuilcxComboBoxAll(CBDriver.Properties.Items);
+  FRunning                    := False;
 end;
 
 Procedure TForm2.CancelBurning;
@@ -91,7 +92,8 @@ var iCount : integer;
 begin
   Try
     iCount := 0;
-    FBurningTool.CancelBurning;
+    if FRunning then    
+      FBurningTool.CancelBurning;
     while FRunning do
     begin
       Inc(iCount);
@@ -131,7 +133,7 @@ begin
     IMAPI_FORMAT2_DATA_WRITE_ACTION_VERIFYING : PVerifica.Position := SPosition;
   end;
 
-  if FAbort then   
+  if aAbort then   
   begin
     FRunning := False;
     PBurn.Position := 0;
