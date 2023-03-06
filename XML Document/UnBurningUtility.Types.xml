@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name="UnBurningUtility.Types" platform="Win32">
+  <const name="SbCopy" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="6">
+    <value>
+      SbCopy
+    </value>
+  </const>
+  <const name="SbMD5" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="7">
+    <value>
+      SbMD5
+    </value>
+  </const>
+  <const name="SbAbort" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="8">
+    <value>
+      SbAbort
+    </value>
+  </const>
+  <const name="SbBurning" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="9">
+    <value>
+      SbBurning
+    </value>
+  </const>
+  <const name="SbBurned" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="10">
+    <value>
+      SbBurned
+    </value>
+  </const>
+  <const name="SbError" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="11">
+    <value>
+      SbError
+    </value>
+  </const>
+  <const name="sbCheckFile" type="TStatusBurn" file="UnBurningUtility.Types.pas" line="12">
+    <value>
+      sbCheckFile
+    </value>
+  </const>
+  <const name="tplivException" type="TpLivLog" file="UnBurningUtility.Types.pas" line="14">
+    <value>
+      tplivException
+    </value>
+  </const>
+  <const name="tpLivError" type="TpLivLog" file="UnBurningUtility.Types.pas" line="15">
+    <value>
+      tpLivError
+    </value>
+  </const>
+  <const name="tpLivWarning" type="TpLivLog" file="UnBurningUtility.Types.pas" line="16">
+    <value>
+      tpLivWarning
+    </value>
+  </const>
+  <const name="tpLivInfo" type="TpLivLog" file="UnBurningUtility.Types.pas" line="17">
+    <value>
+      tpLivInfo
+    </value>
+  </const>
+  <enum name="TStatusBurn" file="UnBurningUtility.Types.pas" line="6">
+    <element value="0" name="SbCopy" file="UnBurningUtility.Types.pas" line="6" />
+    <element value="1" name="SbMD5" file="UnBurningUtility.Types.pas" line="7" />
+    <element value="2" name="SbAbort" file="UnBurningUtility.Types.pas" line="8" />
+    <element value="3" name="SbBurning" file="UnBurningUtility.Types.pas" line="9" />
+    <element value="4" name="SbBurned" file="UnBurningUtility.Types.pas" line="10" />
+    <element value="5" name="SbError" file="UnBurningUtility.Types.pas" line="11" />
+    <element value="6" name="sbCheckFile" file="UnBurningUtility.Types.pas" line="12" />
+  </enum>
+  <enum name="TpLivLog" file="UnBurningUtility.Types.pas" line="14">
+    <element value="0" name="tplivException" file="UnBurningUtility.Types.pas" line="14" />
+    <element value="1" name="tpLivError" file="UnBurningUtility.Types.pas" line="15" />
+    <element value="2" name="tpLivWarning" file="UnBurningUtility.Types.pas" line="16" />
+    <element value="3" name="tpLivInfo" file="UnBurningUtility.Types.pas" line="17" />
+  </enum>
+</namespace>

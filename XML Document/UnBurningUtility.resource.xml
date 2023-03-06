@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name="UnBurningUtility.resource" platform="Win32">
+  <const name="Burning_Aboring" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="7">
+    <value>
+      Abort in progress...
+    </value>
+  </const>
+  <const name="Disk_Erase" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="8">
+    <value>
+      Disk wiping...
+    </value>
+  </const>
+  <const name="Disk_Erase_compleate" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="9">
+    <value>
+      Disk wipe completed.
+    </value>
+  </const>
+  <const name="Media_Eject_Not_Supported" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="11">
+    <value>
+      The burner does not support automatic closing of the disc tray. Please proceed manually and continue?
+    </value>
+  </const>
+  <const name="Media_eject_Not_Supported_2" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="12">
+    <value>
+      The burner does not support automatic ejection of the disc tray, please manually open the tray and continue.
+    </value>
+  </const>
+  <const name="Unknow_status_eject" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="13">
+    <value>
+      Unable to verify the status of the disc tray, proceed manually and continue?
+    </value>
+  </const>
+  <const name="Sync_Driver" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="15">
+    <value>
+      Synchronization of driver...
+    </value>
+  </const>
+  <const name="Acq_driver" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="16">
+    <value>
+      Acquiring exclusive control of the driver...
+    </value>
+  </const>
+  <const name="Verifying_disk" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="17">
+    <value>
+      Verifying disk...
+    </value>
+  </const>
+  <const name="Cancellation" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="18">
+    <value>
+      Cancellation...
+    </value>
+  </const>
+  <const name="Burn_completed" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="19">
+    <value>
+      Burn completed.
+    </value>
+  </const>
+  <const name="Insert_disk" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="20">
+    <value>
+      Please insert a disk into drive: %%s
+    </value>
+  </const>
+  <const name="Disk_detected" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="21">
+    <value>
+      Disc detected...
+    </value>
+  </const>
+  <const name="Invalid_Disk" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="23">
+    <value>
+      The disc type is valid..
+    </value>
+  </const>
+  <const name="Disk_not_empty" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="24">
+    <value>
+      The disk is not empty...
+    </value>
+  </const>
+  <const name="Insert_empty_disk" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="25">
+    <value>
+      Please insert a blank disc into drive : %%s
+    </value>
+  </const>
+  <const name="Disk_is_empty" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="26">
+    <value>
+      Disk is empty...
+    </value>
+  </const>
+  <const name="Invalid_disk_for_driver" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="27">
+    <value>
+      The disc in the drive is not suitable for this type, Please insert another type of disc in the drive : %%s
+    </value>
+  </const>
+  <const name="Time_progress" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="29">
+    <value>
+      Time spent: %%S%%S Estimated time: %%s
+    </value>
+  </const>
+  <const name="Finalization_str" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="30">
+    <value>
+      Finalization...
+    </value>
+  </const>
+  <const name="Disk_request" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="31">
+    <value>
+      Disk request...
+    </value>
+  </const>
+  <const name="Erase_request" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="33">
+    <value>
+      The disc in the unit: %%S is not empty, do you want to proceed with the cancellation?
+    </value>
+  </const>
+  <const name="Burn_Not_possible_rw" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="34">
+    <value>
+      It is not possible to burn on rewritable discs insert a new disc in the unit: %%s
+    </value>
+  </const>
+  <const name="Time_progress_Format" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="36">
+    <value>
+      Disk formatting%%sPassed time: %%s%%sEstimated time: %%s
+    </value>
+  </const>
+  <const name="Disk_validation" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="38">
+    <value>
+      Disk validation...
+    </value>
+  </const>
+  <const name="Disk_formatting" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="39">
+    <value>
+      Disk formatting...
+    </value>
+  </const>
+  <const name="init_hw" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="40">
+    <value>
+      Initialization hardware
+    </value>
+  </const>
+  <const name="Laser_calibration" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="41">
+    <value>
+      Laser calibration...
+    </value>
+  </const>
+  <const name="Disk_writing" type="string" resourcestring="true" file="UnBurningUtility.resource.pas" line="42">
+    <value>
+      Disco writing in progress...
+    </value>
+  </const>
+</namespace>
