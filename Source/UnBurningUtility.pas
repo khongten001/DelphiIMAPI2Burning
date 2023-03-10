@@ -3,7 +3,7 @@
 interface
 
 uses IMAPI2_TLB,IMAPI2FS_TLB,Winapi.Windows,UnBurningUtility.Types,UnBurningUtility.resource,
-     Vcl.ImgList,Vcl.graphics,System.SysUtils,System.Classes,cxImageComboBox,
+     Vcl.ImgList,Vcl.graphics,System.SysUtils,System.Classes,{$IFDEF USE_DEVEXPRESS} cxImageComboBox,{$ENDIF}
      Winapi.ActiveX,Vcl.OleServer,WinApi.Messages,AxCtrls,
      vcl.controls,Winapi.ShellApi,vcl.Forms,System.Variants,System.Win.ComObj;
 
@@ -328,14 +328,14 @@ type
     ///  If the ISO file could not be loaded, the procedure will exit without doing anything.
     ///</remarks>    
     procedure WriteIso(var aDataWriter: TMsftDiscFormat2Data;aIndexDriver,aSupportType:Integer; const aCaptionDisk,aPathIso: string;var aStatusWrite : TStatusBurn);
-
+    {$IFDEF USE_DEVEXPRESS}
     /// <summary>
     /// Builds the specified TcxImageComboBoxItems with the items contained in the provided TStringList.
     /// </summary>
     /// <param name="aItemsCxComboBox">The TcxImageComboBoxItems to be built.</param>
     /// <param name="aDriverList">The TStringList containing the items to be added to the TcxImageComboBoxItems.</param>    
-    procedure BuilcxComboBox(aItemsCxComboBox: TcximageComboBoxItems;aDriverList: TStringList);
-    
+    procedure BuildcxComboBox(aItemsCxComboBox: TcximageComboBoxItems;aDriverList: TStringList);
+    {$ENDIF}
     /// <summary>
     /// Gets the maximum write sectors per second supported by the specified driver and data writer.
     /// </summary>
@@ -391,7 +391,8 @@ type
     ///<param name="object_">The IDispatch interface representing the MsftEraseData object.</param>
     ///<param name="elapsedSeconds">The number of seconds elapsed since the start of the erasing process.</param>
     ///<param name="estimatedTotalSeconds">The estimated total number of seconds required to complete the erasing process.</param>    
-    procedure MsftEraseDataUpdate(ASender: TObject; const object_: IDispatch;elapsedSeconds, estimatedTotalSeconds: Integer);    
+    procedure MsftEraseDataUpdate(ASender: TObject; const object_: IDispatch;elapsedSeconds, estimatedTotalSeconds: Integer);
+
   public
     constructor Create;
     destructor Destroy; override;
@@ -458,7 +459,7 @@ type
     /// <param name="aDrive">A string representing the drive letter of the target drive.</param>
     /// <returns>An integer representing the index of the system icon associated with the specified drive. Returns -1 if the image list has not been assigned.</returns>    
     Function GetBitmapDriver(const aDrive: String):Integer;
-    
+    {$IFDEF USE_DEVEXPRESS}
     /// <summary>
     /// Builds items for a TcxImageComboBox component with CDs optical drive.
     /// </summary>
@@ -493,8 +494,14 @@ type
     /// Builds items for a TcxImageComboBox component with all optical drive.
     /// </summary>
     /// <param name="aItemsCxComboBox">The TcxImageComboBoxItems component to populate with items.</param>        
-    procedure BuilcxComboBoxAll(aItemsCxComboBox: TcximageComboBoxItems);
+    procedure BuildcxComboBoxAll(aItemsCxComboBox: TcximageComboBoxItems);
+    {$ENDIF}
     
+    /// <summary>
+    /// Builds TStringList component with all optical drive.
+    /// </summary>
+    /// <param name="aList">The TStringList object to populate with items.</param>     
+    procedure BuildComboBoxDriveAll(aList: TStrings);    
     {Property}    
     /// <summary>
     /// Property indicating whether the device can burn CDs.
@@ -649,6 +656,7 @@ begin
   end;
 end;
 
+{$IFDEF USE_DEVEXPRESS}
 procedure TBurningTool.BuildItemCD_DL(aItemsCxComboBox: TcximageComboBoxItems);
 begin
   BuilcxComboBox(aItemsCxComboBox,FListaDriveCD_DL);
@@ -674,7 +682,7 @@ begin
   BuilcxComboBox(aItemsCxComboBox,FListaDriveDVD_DL)
 end;
 
-Procedure TBurningTool.BuilcxComboBox(aItemsCxComboBox: TcximageComboBoxItems;aDriverList:TStringList);
+Procedure TBurningTool.BuildcxComboBox(aItemsCxComboBox: TcximageComboBoxItems;aDriverList:TStringList);
 var I                      : Integer;
     LCurrentItemCxComboBox : TcxImageComboBoxItem;
 begin
@@ -695,7 +703,7 @@ begin
 end;
 
 
-Procedure TBurningTool.BuilcxComboBoxAll(aItemsCxComboBox: TcximageComboBoxItems);
+Procedure TBurningTool.BuildcxComboBoxAll(aItemsCxComboBox: TcximageComboBoxItems);
 var I                      : Integer;
     LCurrentItemCxComboBox : TcxImageComboBoxItem;
 begin
@@ -732,12 +740,43 @@ begin
       LCurrentItemCxComboBox.Tag         := TIPO_SUPPORT_BDR;
       LCurrentItemCxComboBox.Value       := Integer(FListaDriveBDR.Objects[I])
     end;    
-    
-    
+
   Finally
     aItemsCxComboBox.EndUpdate;
   End;
 end;
+{$ENDIF}
+
+procedure TBurningTool.BuildComboBoxDriveAll(aList:TStrings);
+var I  : Integer;
+begin
+  aList.BeginUpdate;
+  Try
+    aList.Clear;
+
+    for I := 0 to FListaDriveCD.Count -1 do
+    begin
+      if FListaDriveDVD.IndexOf(FListaDriveCD.Strings[I]) <> -1 then continue;
+      if FListaDriveBDR.IndexOf(FListaDriveCD.Strings[I]) <> -1 then continue;
+
+      aList.AddObject(FListaDriveCD.Strings[I],TObject(TIPO_SUPPORT_CD));
+    end;
+
+    for I := 0 to FListaDriveDVD.Count -1 do
+    begin
+      if FListaDriveBDR.IndexOf(FListaDriveDVD.Strings[I]) <> -1 then continue;    
+      aList.AddObject(FListaDriveDVD.Strings[I],TObject(TIPO_SUPPORT_DVD));
+
+    end;
+
+    for I := 0 to FListaDriveBDR.Count -1 do
+      aList.AddObject(FListaDriveBDR.Strings[I],TObject(TIPO_SUPPORT_BDR));
+
+  Finally
+    aList.EndUpdate;
+  End;
+end;
+
 
 Function TBurningTool.IsDriverRW(aDriveIndex : Integer;aSupportType:Integer):Boolean;
 var I          : LongInt;

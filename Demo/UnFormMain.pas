@@ -5,10 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UnBurningUtility.Types,IMAPI2_TLB,System.UiTypes,
-  Vcl.WinXCtrls, Vcl.ComCtrls,UnBurningUtility, cxGraphics, cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
-  Vcl.StdCtrls, dxGDIPlusClasses, Vcl.ExtCtrls, cxTextEdit, cxMaskEdit,
-  cxDropDownEdit, cxImageComboBox;
+  Vcl.WinXCtrls, Vcl.ComCtrls,UnBurningUtility,
+  Vcl.StdCtrls, dxGDIPlusClasses, Vcl.ExtCtrls;
 
 type
   TForm2 = class(TForm)
@@ -16,7 +14,6 @@ type
     PBurn: TProgressBar;
     cxLabel1: TLabel;
     LDrive: TLabel;
-    CBDriver: TcxImageComboBox;
     cxGroupBox6: TPanel;
     CkCheckFinalFile: TToggleSwitch;
     LstatusCheckFile: TLabel;
@@ -30,6 +27,7 @@ type
     Button2: TButton;
     OpenDialog1: TOpenDialog;
     Memo1: TMemo;
+    CBDriver: TComboBox;
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BCancelClick(Sender: TObject);
@@ -54,7 +52,7 @@ implementation
 procedure TForm2.Button2Click(Sender: TObject);
 begin
   PBurn.Position := 0;
-  FAbort         := False;
+
   if OpenDialog1.Execute then
   begin
 
@@ -67,9 +65,9 @@ begin
         Exit;
       end;
       LInfoBurn.Caption := 'Start burning...';
-      
+      LInfoBurn.Repaint;
       {Evento di progress della masterizzazione}
-      FBurningTool.BurningDiskImage(CbDriver.ItemIndex,CBDriver.Properties.Items[CbDriver.ItemIndex].Tag,OpenDialog1.FileName,'DiscTest',CkCheckFinalFile.State=tssON)
+      FBurningTool.BurningDiskImage(CbDriver.ItemIndex,Integer(CBDriver.Items.Objects[CbDriver.ItemIndex]),OpenDialog1.FileName,'DiscTest',CkCheckFinalFile.State=tssON)
     end
     else
     begin
@@ -83,8 +81,8 @@ begin
   FBurningTool                := TBurningTool.Create;
   FBurningTool.OnProgressBurn := DoOnProgress;
   FBurningTool.OnLog          := DoOnLog;
-  FBurningTool.BuilcxComboBoxAll(CBDriver.Properties.Items);
-  FRunning                    := False;
+//  FBurningTool.BuilcxComboBoxAll(CBDriver.Properties.Items);
+  FBurningTool.BuildComboBoxDriveAll(CBDriver.Items);
 end;
 
 Procedure TForm2.CancelBurning;
@@ -119,6 +117,7 @@ procedure TForm2.DoOnProgress(Sender: Tobject; const SInfo: String;
   AllowAbort: Boolean);
 begin
   LInfoBurn.Caption  := sInfo;
+  LInfoBurn.Repaint;
   BCancel.Enabled    := AllowAbort;
   FRunning           := True;
   case iType of

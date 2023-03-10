@@ -61,24 +61,6 @@ object Form2: TForm2
       Align = alTop
       TabOrder = 0
     end
-    object CBDriver: TcxImageComboBox
-      AlignWithMargins = True
-      Left = 16
-      Top = 22
-      Margins.Left = 15
-      Margins.Right = 300
-      Align = alTop
-      Properties.ImmediatePost = True
-      Properties.ImmediateUpdateText = True
-      Properties.Items = <>
-      Properties.ReadOnly = False
-      Style.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleFocused.LookAndFeel.NativeStyle = False
-      StyleHot.LookAndFeel.NativeStyle = False
-      TabOrder = 1
-      Width = 459
-    end
     object cxGroupBox6: TPanel
       AlignWithMargins = True
       Left = 4
@@ -87,7 +69,7 @@ object Form2: TForm2
       Height = 54
       Align = alTop
       ParentBackground = False
-      TabOrder = 3
+      TabOrder = 2
       object LstatusCheckFile: TLabel
         Left = 91
         Top = 1
@@ -142,7 +124,7 @@ object Form2: TForm2
       Ctl3D = False
       ParentBackground = False
       ParentCtl3D = False
-      TabOrder = 2
+      TabOrder = 1
       object LInfoBurn: TLabel
         AlignWithMargins = True
         Left = 31
@@ -171,7 +153,7 @@ object Form2: TForm2
       Width = 75
       Height = 25
       Caption = 'Cancel'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = BCancelClick
     end
     object Button2: TButton
@@ -180,8 +162,23 @@ object Form2: TForm2
       Width = 75
       Height = 25
       Caption = 'Burn'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = Button2Click
+    end
+    object CBDriver: TComboBox
+      AlignWithMargins = True
+      Left = 16
+      Top = 22
+      Width = 744
+      Height = 21
+      Margins.Left = 15
+      Margins.Right = 15
+      Align = alTop
+      TabOrder = 5
+      Text = 'CBDriver'
+      ExplicitLeft = -4
+      ExplicitTop = 6
+      ExplicitWidth = 774
     end
   end
   object cxGroupBox7: TPanel
