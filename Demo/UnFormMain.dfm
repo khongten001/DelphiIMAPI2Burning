@@ -27,7 +27,7 @@ object Form2: TForm2
     object cxLabel1: TLabel
       AlignWithMargins = True
       Left = 16
-      Top = 51
+      Top = 96
       Width = 756
       Height = 13
       Margins.Left = 15
@@ -35,9 +35,24 @@ object Form2: TForm2
       Align = alTop
       Caption = 'Burning progress.'
       Transparent = True
+      ExplicitTop = 51
       ExplicitWidth = 85
     end
     object LDrive: TLabel
+      AlignWithMargins = True
+      Left = 16
+      Top = 51
+      Width = 756
+      Height = 13
+      Margins.Left = 15
+      Margins.Top = 5
+      Align = alTop
+      Caption = 'Select driver'
+      Transparent = True
+      ExplicitLeft = 14
+      ExplicitTop = 30
+    end
+    object Label1: TLabel
       AlignWithMargins = True
       Left = 16
       Top = 6
@@ -48,28 +63,31 @@ object Form2: TForm2
       Align = alTop
       Caption = 'Select driver'
       Transparent = True
-      ExplicitWidth = 60
+      ExplicitLeft = 14
+      ExplicitTop = 8
     end
     object PBurn: TProgressBar
       AlignWithMargins = True
       Left = 16
-      Top = 67
+      Top = 112
       Width = 744
       Height = 25
       Margins.Left = 15
       Margins.Right = 15
       Align = alTop
       TabOrder = 0
+      ExplicitTop = 67
     end
     object cxGroupBox6: TPanel
       AlignWithMargins = True
       Left = 4
-      Top = 283
+      Top = 328
       Width = 768
       Height = 54
       Align = alTop
       ParentBackground = False
       TabOrder = 2
+      ExplicitTop = 283
       object LstatusCheckFile: TLabel
         Left = 91
         Top = 1
@@ -117,7 +135,7 @@ object Form2: TForm2
     object cxGroupBox14: TPanel
       AlignWithMargins = True
       Left = 4
-      Top = 98
+      Top = 143
       Width = 768
       Height = 179
       Align = alTop
@@ -125,6 +143,7 @@ object Form2: TForm2
       ParentBackground = False
       ParentCtl3D = False
       TabOrder = 1
+      ExplicitTop = 98
       object LInfoBurn: TLabel
         AlignWithMargins = True
         Left = 31
@@ -168,17 +187,34 @@ object Form2: TForm2
     object CBDriver: TComboBox
       AlignWithMargins = True
       Left = 16
-      Top = 22
+      Top = 67
       Width = 744
       Height = 21
       Margins.Left = 15
       Margins.Right = 15
       Align = alTop
       TabOrder = 5
-      Text = 'CBDriver'
-      ExplicitLeft = -4
-      ExplicitTop = 6
-      ExplicitWidth = 774
+      ExplicitTop = 22
+    end
+    object CbSupportType: TComboBox
+      AlignWithMargins = True
+      Left = 16
+      Top = 22
+      Width = 744
+      Height = 21
+      Margins.Left = 15
+      Margins.Right = 15
+      Align = alTop
+      ItemIndex = 0
+      TabOrder = 6
+      Text = 'CD'
+      OnChange = CbSupportTypeChange
+      Items.Strings = (
+        'CD'
+        'DVD'
+        'BDR')
+      ExplicitLeft = 14
+      ExplicitTop = 40
     end
   end
   object cxGroupBox7: TPanel
@@ -272,9 +308,11 @@ object Form2: TForm2
     Align = alRight
     Lines.Strings = (
       'Memo1')
+    ScrollBars = ssBoth
     TabOrder = 2
   end
   object OpenDialog1: TOpenDialog
+    Filter = 'ISO File (*.iso) | *.iso'
     Left = 640
     Top = 430
   end

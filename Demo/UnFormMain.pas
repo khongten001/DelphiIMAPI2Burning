@@ -28,9 +28,12 @@ type
     OpenDialog1: TOpenDialog;
     Memo1: TMemo;
     CBDriver: TComboBox;
+    CbSupportType: TComboBox;
+    Label1: TLabel;
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BCancelClick(Sender: TObject);
+    procedure CbSupportTypeChange(Sender: TObject);
   private
     { Private declarations }
     FBurningTool : TBurningTool;
@@ -68,6 +71,7 @@ begin
       LInfoBurn.Repaint;
       {Evento di progress della masterizzazione}
       FBurningTool.BurningDiskImage(CbDriver.ItemIndex,Integer(CBDriver.Items.Objects[CbDriver.ItemIndex]),OpenDialog1.FileName,'DiscTest',CkCheckFinalFile.State=tssON)
+
     end
     else
     begin
@@ -78,11 +82,15 @@ end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
+  CBDriver.ItemIndex          := -1;
+  CBDriver.Text               := String.Empty;
   FBurningTool                := TBurningTool.Create;
   FBurningTool.OnProgressBurn := DoOnProgress;
   FBurningTool.OnLog          := DoOnLog;
-//  FBurningTool.BuilcxComboBoxAll(CBDriver.Properties.Items);
-  FBurningTool.BuildComboBoxDriveAll(CBDriver.Items);
+  FBurningTool.CanErase       := True;
+  FBurningTool.BuildComboBoxDriveAll(CBDriver.Items,TIPO_SUPPORT_CD);
+  if CBDriver.Items.Count > 0 then
+    CBDriver.ItemIndex := 0;  
 end;
 
 Procedure TForm2.CancelBurning;
@@ -124,9 +132,7 @@ begin
     IMAPI_FORMAT2_DATA_WRITE_ACTION_WRITING_DATA :
         begin
           if RefreshPosition then
-          begin
             PBurn.Position := (SPosition);
-          end;
         end;
 
     IMAPI_FORMAT2_DATA_WRITE_ACTION_VERIFYING : PVerifica.Position := SPosition;
@@ -158,6 +164,20 @@ end;
 procedure TForm2.BCancelClick(Sender: TObject);
 begin
   CancelBurning;
+end;
+
+procedure TForm2.CbSupportTypeChange(Sender: TObject);
+begin
+  CBDriver.ItemIndex := -1;
+  CBDriver.Text      := String.Empty; 
+  case CbSupportType.ItemIndex of
+   0 :   FBurningTool.BuildComboBoxDriveAll(CBDriver.Items,TIPO_SUPPORT_CD);
+   1 :   FBurningTool.BuildComboBoxDriveAll(CBDriver.Items,TIPO_SUPPORT_DVD);
+   2 :   FBurningTool.BuildComboBoxDriveAll(CBDriver.Items,TIPO_SUPPORT_BDR);
+  end;
+
+  if CBDriver.Items.Count > 0 then
+    CBDriver.ItemIndex := 0;
 end;
 
 end.

@@ -501,7 +501,7 @@ type
     /// Builds TStringList component with all optical drive.
     /// </summary>
     /// <param name="aList">The TStringList object to populate with items.</param>     
-    procedure BuildComboBoxDriveAll(aList: TStrings);    
+    procedure BuildComboBoxDriveAll(aList: TStrings;aSupportType:Integer);    
     {Property}    
     /// <summary>
     /// Property indicating whether the device can burn CDs.
@@ -747,30 +747,25 @@ begin
 end;
 {$ENDIF}
 
-procedure TBurningTool.BuildComboBoxDriveAll(aList:TStrings);
-var I  : Integer;
+procedure TBurningTool.BuildComboBoxDriveAll(aList:TStrings;aSupportType:Integer);
+var I              : Integer;
+    LtmpListDriver : TStringList;
 begin
   aList.BeginUpdate;
   Try
     aList.Clear;
 
-    for I := 0 to FListaDriveCD.Count -1 do
-    begin
-      if FListaDriveDVD.IndexOf(FListaDriveCD.Strings[I]) <> -1 then continue;
-      if FListaDriveBDR.IndexOf(FListaDriveCD.Strings[I]) <> -1 then continue;
-
-      aList.AddObject(FListaDriveCD.Strings[I],TObject(TIPO_SUPPORT_CD));
+    case aSupportType of
+       TIPO_SUPPORT_CD     : LtmpListDriver := FListaDriveCD;
+       TIPO_SUPPORT_DVD    : LtmpListDriver := FListaDriveDVD;
+       TIPO_SUPPORT_DVD_DL : LtmpListDriver := FListaDriveDVD_DL;
+       TIPO_SUPPORT_BDR    : LtmpListDriver := FListaDriveBDR; 
+    else
+      raise Exception.CreateFmt('Invalid support type [%d]',[aSupportType]);
     end;
 
-    for I := 0 to FListaDriveDVD.Count -1 do
-    begin
-      if FListaDriveBDR.IndexOf(FListaDriveDVD.Strings[I]) <> -1 then continue;    
-      aList.AddObject(FListaDriveDVD.Strings[I],TObject(TIPO_SUPPORT_DVD));
-
-    end;
-
-    for I := 0 to FListaDriveBDR.Count -1 do
-      aList.AddObject(FListaDriveBDR.Strings[I],TObject(TIPO_SUPPORT_BDR));
+    for I := 0 to LtmpListDriver.Count -1 do
+      aList.AddObject(LtmpListDriver.Strings[I],TObject(aSupportType));
 
   Finally
     aList.EndUpdate;
@@ -1881,7 +1876,7 @@ begin
                                                   WriteLog('TBurningTool.CheckMediaBySupport',' Support type IMAPI_MEDIA_TYPE_CDR',tpLivInfo);
                                                 {TSI:IGNORE OFF}
                                                 {$ENDREGION}
-                                                Result := aSupportType = TIPO_SUPPORT_CD;
+                                                Result := aSupportType = TIPO_SUPPORT_CD ;
                                               end;
       IMAPI_MEDIA_TYPE_CDRW                 : begin
                                                 {$REGION 'Log'}
@@ -1890,7 +1885,7 @@ begin
                                                 {TSI:IGNORE OFF}
                                                 {$ENDREGION}
                                                 Result := aSupportType = TIPO_SUPPORT_CD;
-                                                aIsRW   := True;
+                                                aIsRW  := True;
                                               end;
       IMAPI_MEDIA_TYPE_DVDROM               : {$REGION 'Log'}
                                               {TSI:IGNORE ON}
@@ -1988,6 +1983,11 @@ begin
 
     if Result then
     begin
+      {$REGION 'Log'}
+      {TSI:IGNORE ON}
+        WriteLog('TBurningTool.CheckMediaBySupport',Format( 'Before IsRecorderSupported media status [ %d ]',[aDataWriter.CurrentPhysicalMediaType]),tpLivInfo,True);
+      {TSI:IGNORE OFF}
+      {$ENDREGION}    
       Result := aDataWriter.DefaultInterface.IsRecorderSupported(FDiscRecord.DefaultInterface);
       if Not Result then
         {$REGION 'Log'}
