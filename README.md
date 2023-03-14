@@ -10,7 +10,7 @@ Finally, I want to note that my library uses DevExpress for the ComboBox compila
 if you want to use devexpresses with the CxImageCoboBox which provides the system images in the device combo, use the USE_DEVEXPRESS compilation directive
 
 
-#Demo screenshot
+# Demo screenshot
 
 ![image](https://user-images.githubusercontent.com/11525545/225071434-b0c8ed8e-b6d7-4af1-9556-8952a646a155.png)
 
